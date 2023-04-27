@@ -34,10 +34,6 @@ Product.init(
         unique: true
       }
     },
-    product_tag: { // TODO: in tag model
-      type: DataTypes.STRING,
-      allowNull: false
-    }
   },
   {
     sequelize,
