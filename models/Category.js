@@ -24,7 +24,7 @@ Category.init(
     }
   },
   {
-    sequelize, // specifies the instance of the Sequelize class to be used for defining the model
+    sequelize, // specifies which Sequelize instance to use for defining the model
     timestamps: false, // false prevents the creation of the 'createdAt' and 'updatedAt' fields
     freezeTableName: true, // false will not pluralize the table name
     underscored: true, // keys will use snake_case instead of camelCase
