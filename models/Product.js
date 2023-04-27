@@ -1,12 +1,16 @@
-// import important parts of sequelize library
-const { Model, DataTypes } = require('sequelize');
-// import our database connection from config.js
-const sequelize = require('../config/connection');
+// initialize variables
+const { Model, DataTypes } = require('sequelize'),
+      sequelize = require('../config/connection');
 
-// Initialize Product model (table) by extending off Sequelize's Model class
+// Category class inherits the Sequelize Model class
 class Product extends Model {}
 
-// set up fields and rules for Product model
+/**
+ * @init
+ * This method initializes the Product model
+ * in Sequelize and defines five keys: id,
+ * product_name, price, stock and category_id
+ */
 Product.init(
   {
     id: {
@@ -37,12 +41,13 @@ Product.init(
     },
   },
   {
-    sequelize,
-    timestamps: false,
-    freezeTableName: true,
-    underscored: true,
-    modelName: 'product',
+    sequelize, // specifies the instance of the Sequelize class to be used for defining the model
+    timestamps: false, // false prevents the creation of the 'createdAt' and 'updatedAt' fields
+    freezeTableName: true, // false will not pluralize the table name
+    underscored: true, // keys will use snake_case instead of camelCase
+    modelName: 'product', // the name of the model
   }
 );
 
+// export the class
 module.exports = Product;
