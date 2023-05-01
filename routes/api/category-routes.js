@@ -1,5 +1,6 @@
-const router = require('express').Router();
-const { Category, Product } = require('../../models');
+// initialize variables
+const router = require('express').Router(),
+      { Category, Product } = require('../../models');
 
 /* localhost:3001/api/categories */
 
