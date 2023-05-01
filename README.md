@@ -135,6 +135,8 @@ my database
     - **GET** localhost:3001/api/tags/:id
   * Create a new tag: 
     - **POST** localhost:3001/api/tags
+  * Update a tag: 
+    - **PUT** localhost:3001/api/tags/:id
 
   // TODO: Add additional routes here  
 

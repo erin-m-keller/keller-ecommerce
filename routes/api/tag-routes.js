@@ -90,8 +90,36 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', (req, res) => {
-  // update a tag's name by its `id` value
+/**
+ * @updateTag
+ * This route will update a category
+ * name based on the ID in the params
+ */
+router.put('/:id', async (req, res) => {
+  // initialize variables
+  const { name } = req.body,
+        tagId = req.params.id;
+  // error handler
+  try {
+    // sequelize method to create a new database entry
+    const tag = await Tag.update(
+      { tag_name: name }, // update the tag name
+      { where: { tag_id: tagId } } // where tag_id === params value
+    );
+    // return status 200 with data
+    const updatedTag = await Tag.findByPk(tagId, 
+      { include: Product }
+    );
+    // return status 200 with data
+    res.status(200).json(updatedTag);
+  } 
+  // an error was detected 
+  catch (error) {
+    // log the error
+    console.error(error);
+    // return status 500 with error message
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
 router.delete('/:id', (req, res) => {

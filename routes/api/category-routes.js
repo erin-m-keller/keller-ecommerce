@@ -103,11 +103,13 @@ router.put('/:id', async (req, res) => {
   try {
     // sequelize method to create a new database entry
     const category = await Category.update(
-      { category_name: name },
+      { category_name: name }, // update the category name
       { where: { category_id: categoryId } } // where category_id === params value
     );
     // return status 200 with data
-    const updatedCategory = await Category.findByPk(categoryId, { include: Product });
+    const updatedCategory = await Category.findByPk(categoryId, 
+      { include: Product }
+    );
     // return status 200 with data
     res.status(200).json(updatedCategory);
   } 
