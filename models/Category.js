@@ -13,22 +13,43 @@ class Category extends Model {}
  */
 Category.init(
   {
+    /* category id */
     category_id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
+      type: DataTypes.INTEGER, // integer
+      primaryKey: true, // primary key
+      autoIncrement: true, // auto increment the tag_id
+      // validate the value
+      validate: {
+        is: /^\d+$/ // category_id is an integer and not null
+      }
     },
+    /* category name */
     category_name: {
-      type: DataTypes.STRING,
-      allowNull: false
+      type: DataTypes.STRING, // string
+      allowNull: false, // do not allow null values
+      // validate the value
+      validate: {
+        is: /^.+$/ // category_name is a string and not null
+      }
     }
   },
   {
-    sequelize, // specifies which Sequelize instance to use for defining the model
-    timestamps: false, // false prevents the creation of the 'createdAt' and 'updatedAt' fields
-    freezeTableName: true, // false will not pluralize the table name
-    underscored: true, // keys will use snake_case instead of camelCase
-    modelName: 'category', // the name of the model
+    // specifies which Sequelize 
+    // instance to use for defining 
+    // the model
+    sequelize, 
+    // false prevents the creation of 
+    // the 'createdAt' and 'updatedAt' 
+    // fields
+    timestamps: false, 
+    // true will prevent sequelize
+    // from pluralizing the names
+    freezeTableName: true,
+    // keys will use snake_case instead 
+    // of camelCase 
+    underscored: true, 
+    // the name of the model
+    modelName: 'category', 
   }
 );
 

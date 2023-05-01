@@ -13,36 +13,64 @@ class ProductTag extends Model {}
  */
 ProductTag.init(
   {
+    /* id */
     id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
-    },
-    product_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'product',
-        key: 'id',
-        unique: true
+      type: DataTypes.INTEGER, // integer
+      primaryKey: true, // primary key 
+      autoIncrement: true, // auto increment the id
+      // validate the value
+      validate: {
+        is: /^\d+$/ // id is an integer and not null
       }
     },
-    tag_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+    /* product id */
+    product_id: {
+      type: DataTypes.INTEGER, // integer
+      allowNull: false, // do not allow null values
+      // foreign key to product model
       references: {
-        model: 'tag',
-        key: 'tag_id',
-        unique: true
+        model: 'product', // model to reference
+        key: 'id', // key to reference
+        unique: true // disallows duplicate values
+      },
+      // validate the value
+      validate: {
+        is: /^\d+$/ // product_id is an integer and not null
+      }
+    },
+    /* tag id */
+    tag_id: {
+      type: DataTypes.INTEGER, // integer
+      allowNull: false, // do not allow null values
+      // foreign key to tag model
+      references: {
+        model: 'tag', // model to reference
+        key: 'tag_id', // key to reference
+        unique: true // disallows duplicate values
+      },
+      // validate the value
+      validate: {
+        is: /^\d+$/ // tag_id is an integer and not null
       }
     },
   },
   {
-    sequelize, // specifies which Sequelize instance to use for defining the model
-    timestamps: false, // false prevents the creation of the 'createdAt' and 'updatedAt' fields
-    freezeTableName: true, // false will not pluralize the table name
-    underscored: true, // keys will use snake_case instead of camelCase
-    modelName: 'product_tag', // the name of the model
+    // specifies which Sequelize 
+    // instance to use for defining 
+    // the model
+    sequelize, 
+    // false prevents the creation of 
+    // the 'createdAt' and 'updatedAt' 
+    // fields
+    timestamps: false, 
+    // true will prevent sequelize
+    // from pluralizing the names
+    freezeTableName: true,
+    // keys will use snake_case instead 
+    // of camelCase 
+    underscored: true, 
+    // the name of the model
+    modelName: 'product_tag', 
   }
 );
 
