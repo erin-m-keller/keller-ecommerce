@@ -2,7 +2,7 @@
 const router = require('express').Router(),
       { Tag, Product, ProductTag } = require('../../models');
 
-/* localhost:3001/api/tags */
+/* -- localhost:3001/api/tags -- */
 
 /**
  * @getAllTags
@@ -14,7 +14,7 @@ const router = require('express').Router(),
 router.get('/', async (req, res) => {
   // error handler
   try {
-    // sequelize method to find all tags in the tag table
+    // sequelize method to find all tags
     const tags = await Tag.findAll({
       include: [Product], // include all associated Products
     });
@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
     // log the error
     console.error(err);
     // return status 500 with error message
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Internal Server error' });
   }
 });
 
@@ -43,25 +43,25 @@ router.get('/:id', async (req, res) => {
   const tagId = req.params.id;
   // error handler
   try {
-    // sequelize method to find one tag in the tag table
-    const category = await Tag.findOne({
+    // sequelize method to find a specific tag
+    const tag = await Tag.findOne({
       where: { tag_id: tagId }, // where tag_id === params value
       include: [Product], // include all associated Products 
     });
-    // if no category is found
-    if (!category) {
+    // if no tag is found
+    if (!tag) {
       // return status 400 with not found message
-      return res.status(404).json({ message: 'Category not found' });
+      return res.status(404).json({ message: 'Tag not found' });
     }
     // return the data
-    res.json(category);
+    res.json(tag);
   }
   // an error was detected 
   catch (error) {
     // log the error
     console.error(error);
     // return status 500 with error message
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Internal Server error' });
   }
 });
 
@@ -76,7 +76,7 @@ router.post('/', async (req, res) => {
   const { name } = req.body;
   // error handler
   try {
-    // sequelize method to create a new database entry
+    // sequelize method to create a new tag
     const tag = await Tag.create({ tag_name: name });
     // return status 200 with data
     res.status(200).json(tag);
@@ -101,8 +101,8 @@ router.put('/:id', async (req, res) => {
         tagId = req.params.id;
   // error handler
   try {
-    // sequelize method to create a new database entry
-    const tag = await Tag.update(
+    // sequelize method to update a tag name based on ID
+    await Tag.update(
       { tag_name: name }, // update the tag name
       { where: { tag_id: tagId } } // where tag_id === params value
     );
@@ -122,8 +122,35 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', (req, res) => {
-  // delete on tag by its `id` value
+/**
+ * @deleteTag
+ * This route will delete a tag
+ * based on the ID in the params
+ */
+router.delete('/:id', async (req, res) => {
+  // initialize variables
+  const tagId = req.params.id;
+  // error handler
+  try {
+    // sequelize method to delete a tag 
+    await Tag.destroy(
+      { where: { tag_id: tagId } } // where tag_id === params value
+    );
+    // get the updated category data
+    const updatedTagList = await Tag.findAll({
+      include: [Product], // include all associated Products
+    });
+    // return status 200 with data
+    res.status(200).json(updatedTagList);
+  } 
+  // an error was detected 
+  catch (error) {
+    // log the error
+    console.error(error);
+    // return status 500 with error message
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
+// export the routes
 module.exports = router;

@@ -2,7 +2,7 @@
 const router = require('express').Router(),
       { Category, Product } = require('../../models');
 
-/* localhost:3001/api/categories */
+/* -- localhost:3001/api/categories -- */
 
 /**
  * @getAllCategories
@@ -14,7 +14,7 @@ const router = require('express').Router(),
 router.get('/', async (req, res) => {
   // error handler
   try {
-    // sequelize method to find all categories in the category table
+    // sequelize method to find all categories 
     const categories = await Category.findAll({
       include: [Product], // include all associated Products
     });
@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
     // log the error
     console.error(err);
     // return status 500 with error message
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Internal Server error' });
   }
 });
 
@@ -43,7 +43,7 @@ router.get('/:id', async (req, res) => {
   const categoryId = req.params.id;
   // error handler
   try {
-    // sequelize method to find one category in the category table
+    // sequelize method to find specific category
     const category = await Category.findOne({
       where: { category_id: categoryId }, // where category_id === params value
       include: [Product], // include all associated Products 
@@ -61,7 +61,7 @@ router.get('/:id', async (req, res) => {
     // log the error
     console.error(error);
     // return status 500 with error message
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Internal Server error' });
   }
 });
 
@@ -102,7 +102,7 @@ router.put('/:id', async (req, res) => {
   // error handler
   try {
     // sequelize method to create a new database entry
-    const category = await Category.update(
+    await Category.update(
       { category_name: name }, // update the category name
       { where: { category_id: categoryId } } // where category_id === params value
     );
@@ -132,7 +132,7 @@ router.delete('/:id', async (req, res) => {
   const categoryId = req.params.id;
   // error handler
   try {
-    // sequelize method to create a new database entry
+    // sequelize method to delete a category
     const category = await Category.destroy(
       { where: { category_id: categoryId } } // where category_id === params value
     );

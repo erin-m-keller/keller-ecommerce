@@ -112,7 +112,7 @@ my database
    ``` bash
     npm start
   ```
-  > Once the server is listening use the following commands in Insomnia to view the data
+  > Once the server is listening use the following commands in Insomnia/Postman to view the data
   
   ### Category Routes
   * Get all categories and their associated products: 
@@ -137,6 +137,8 @@ my database
     - **POST** localhost:3001/api/tags
   * Update a tag: 
     - **PUT** localhost:3001/api/tags/:id
+  * Delete a tag: 
+    - **DELETE** localhost:3001/api/tags/:id
 
   // TODO: Add additional routes here  
 
