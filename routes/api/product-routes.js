@@ -1,12 +1,32 @@
-const router = require('express').Router();
-const { Product, Category, Tag, ProductTag } = require('../../models');
+const router = require('express').Router(),
+      { Product, Category, Tag, ProductTag } = require('../../models');
 
-// The `/api/products` endpoint
+/* -- localhost:3001/api/products -- */
 
-// get all products
-router.get('/', (req, res) => {
-  // find all products
-  // be sure to include its associated Category and Tag data
+/**
+ * @getAllProducts
+ * This route will retrieve all Product 
+ * records and join them with their associated 
+ * Category and Tag records based on the foreign 
+ * key relationship defined in the model
+ */
+router.get('/', async (req, res) => {
+  // error handler
+  try {
+    // sequelize method to find all products
+    const products = await Product.findAll({
+      include: [Category, Tag], // include all associated Category and Tag data
+    });
+    // return the data
+    res.json(products);
+  } 
+  // an error was detected
+  catch (err) {
+    // log the error
+    console.error(err);
+    // return status 500 with error message
+    res.status(500).json({ message: 'Internal Server error' });
+  }
 });
 
 // get one product
