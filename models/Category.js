@@ -17,7 +17,7 @@ Category.init(
     category_id: {
       type: DataTypes.INTEGER, // integer
       primaryKey: true, // primary key
-      autoIncrement: true, // auto increment the tag_id
+      autoIncrement: true, // auto increment the category_id
       // validate the value
       validate: {
         is: /^\d+$/ // category_id is an integer and not null
