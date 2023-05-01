@@ -52,7 +52,70 @@ my database
   
   ## Installation 
   
-  // TODO: add installation instructions
+* Clone the repository.
+  ```
+    git clone git@github.com:erin-m-keller/keller-ecommerce.git
+  ```
+
+  * Install the dependencies.
+    * Install [MySQL](https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/)
+  ```
+    cd keller-ecommerce
+    npm i
+  ```
+  
+  * CD into the db directory
+  ```
+    cd db
+  ```
+
+  Start the MySQL server in the terminal (ensure you are in the db directory of the project)
+
+  ``` bash
+    - mysql -u root -p 
+  ```
+
+  Enter the password
+  ``` bash
+    password_goes_here
+  ```
+
+  Once MySQL server has started, create the database
+
+  ``` bash
+    SOURCE schema.sql 
+  ```
+
+  Exit the MySQL server
+  ``` bash
+    exit OR quit
+  ```
+
+  * Return to the root directory
+  ```
+    cd ..
+  ```
+
+  Create an .env file in the root directory and set your local MySQL server username and password
+  > Don't worry, it will only be saved to your local machine. The .env file is in .gitignore
+  ``` bash
+    DB_USER = "your_username_here"
+    DB_PASSWORD = "your_password_here"
+  ```
+
+  Seed the database
+   ``` bash
+    npm run seed
+  ```
+
+  Start the application
+   ``` bash
+    npm start
+  ```
+  > Once the server is listening use the following commands in Insomnia to view the data
+  // TODO: Add routes here
+  **Category Routes**
+  * Get all categories and their associate products: localhost:3001/api/categories
 
   ## Screenshot
   

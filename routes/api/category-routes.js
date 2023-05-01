@@ -3,9 +3,30 @@ const { Category, Product } = require('../../models');
 
 // The `/api/categories` endpoint
 
-router.get('/', (req, res) => {
-  // find all categories
-  // be sure to include its associated Products
+/**
+ * @getAllCategories
+ * This route will retrieve all Category 
+ * records and join them with their associated 
+ * Product records based on the foreign 
+ * key relationship defined in the model
+ */
+router.get('/', async (req, res) => {
+  // error handler
+  try {
+    // sequelize method to find all categories in the category table
+    const categories = await Category.findAll({
+      include: [Product], // include all associated Products
+    });
+    // return the data
+    res.json(categories);
+  } 
+  // an error was detected
+  catch (err) {
+    // log the error
+    console.error(err);
+    // return status 500 with error message
+    res.status(500).json({ message: 'Server error' });
+  }
 });
 
 router.get('/:id', (req, res) => {
