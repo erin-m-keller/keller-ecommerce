@@ -91,8 +91,29 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', (req, res) => {
-  // update a category by its `id` value
+router.put('/:id', async (req, res) => {
+  // initialize variables
+  const { name } = req.body,
+        categoryId = req.params.id;
+  // error handler
+  try {
+    // sequelize method to create a new database entry
+    const category = await Category.update(
+      { category_name: name },
+      { where: { category_id: categoryId } } // where id === params value
+    );
+    // return status 200 with data
+    const updatedCategory = await Category.findByPk(categoryId, { include: Product });
+    // return status 200 with data
+    res.status(200).json(updatedCategory);
+  } 
+  // an error was detected 
+  catch (error) {
+    // log the error
+    console.error(error);
+    // return status 500 with error message
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
 router.delete('/:id', (req, res) => {
