@@ -116,7 +116,8 @@ my database
   
   // TODO: Add routes here
   **Category Routes**
-  * Get all categories and their associate products: localhost:3001/api/categories
+  * Get all categories and their associated products: GET localhost:3001/api/categories
+  * Get one category based on id, and their associated products: GET localhost:3001/api/categories/:id
 
   ## Screenshot
   
