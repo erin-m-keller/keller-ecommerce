@@ -113,6 +113,7 @@ my database
     npm start
   ```
   > Once the server is listening use the following commands in Insomnia to view the data
+  
   // TODO: Add routes here
   **Category Routes**
   * Get all categories and their associate products: localhost:3001/api/categories
