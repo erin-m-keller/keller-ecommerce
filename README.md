@@ -120,7 +120,7 @@ my database
   * Get one category based on id with their associated products: 
     - **GET** localhost:3001/api/categories/:id
   * Create a new category: 
-    - **POST** localhost:3001/api/categories/:id
+    - **POST** localhost:3001/api/categories
     - Set Body to JSON, then enter the following: { "name": "category_name_goes_here" }
   * Update a category: 
     - **PUT** localhost:3001/api/categories/:id
