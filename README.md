@@ -133,6 +133,8 @@ my database
     - **GET** localhost:3001/api/tags
   * Get one tag based on id with their associated products: 
     - **GET** localhost:3001/api/tags/:id
+  * Create a new tag: 
+    - **POST** localhost:3001/api/tags
 
   // TODO: Add additional routes here  
 

@@ -65,8 +65,29 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', (req, res) => {
-  // create a new tag
+/**
+ * @createNewTag
+ * This route will take the name from the
+ * request body, and use it to create a
+ * new tag
+ */
+router.post('/', async (req, res) => {
+  // initialize variables
+  const { name } = req.body;
+  // error handler
+  try {
+    // sequelize method to create a new database entry
+    const tag = await Tag.create({ tag_name: name });
+    // return status 200 with data
+    res.status(200).json(tag);
+  } 
+  // an error was detected 
+  catch (error) {
+    // log the error
+    console.error(error);
+    // return status 500 with error message
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
 router.put('/:id', (req, res) => {

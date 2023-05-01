@@ -68,7 +68,7 @@ router.get('/:id', async (req, res) => {
 /**
  * @createNewCategory
  * This route will take the name from the
- * request body, and user it to create a
+ * request body, and use it to create a
  * new category
  */
 router.post('/', async (req, res) => {
@@ -134,7 +134,7 @@ router.delete('/:id', async (req, res) => {
     const category = await Category.destroy(
       { where: { category_id: categoryId } } // where category_id === params value
     );
-    // return status 200 with data
+    // get the updated category data
     const updatedCategoryList = await Category.findAll({
       include: [Product], // include all associated Products
     });
