@@ -30,9 +30,39 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', (req, res) => {
-  // find a single tag by its `id`
-  // be sure to include its associated Product data
+/**
+ * @getSpecificTag
+ * This route will retrieve one Tag 
+ * record based on an id, and join them 
+ * with their associated Product records 
+ * based on the foreign key relationship 
+ * defined in the model
+ */
+router.get('/:id', async (req, res) => {
+  // initialize variables
+  const tagId = req.params.id;
+  // error handler
+  try {
+    // sequelize method to find one tag in the tag table
+    const category = await Tag.findOne({
+      where: { tag_id: tagId }, // where tag_id === params value
+      include: [Product], // include all associated Products 
+    });
+    // if no category is found
+    if (!category) {
+      // return status 400 with not found message
+      return res.status(404).json({ message: 'Category not found' });
+    }
+    // return the data
+    res.json(category);
+  }
+  // an error was detected 
+  catch (error) {
+    // log the error
+    console.error(error);
+    // return status 500 with error message
+    res.status(500).json({ message: 'Server error' });
+  }
 });
 
 router.post('/', (req, res) => {

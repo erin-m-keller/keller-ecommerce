@@ -128,6 +128,12 @@ my database
   * Delete a category: 
     - **DELETE** localhost:3001/api/categories/:id
 
+  ### Tag Routes
+  * Get all tags and their associated products: 
+    - **GET** localhost:3001/api/tags
+  * Get one tag based on id with their associated products: 
+    - **GET** localhost:3001/api/tags/:id
+
   // TODO: Add additional routes here  
 
   ## Screenshot

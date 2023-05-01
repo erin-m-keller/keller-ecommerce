@@ -45,7 +45,7 @@ router.get('/:id', async (req, res) => {
   try {
     // sequelize method to find one category in the category table
     const category = await Category.findOne({
-      where: { category_id: categoryId }, // where id === params value
+      where: { category_id: categoryId }, // where category_id === params value
       include: [Product], // include all associated Products 
     });
     // if no category is found
