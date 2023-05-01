@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { Category, Product } = require('../../models');
 
-// The `/api/categories` endpoint
+/* localhost:3001/api/categories */
 
 /**
  * @getAllCategories
@@ -66,11 +66,9 @@ router.get('/:id', async (req, res) => {
 
 /**
  * @createNewCategory
- * This route will retrieve one Category 
- * record based on an id, and join them 
- * with their associated Product records 
- * based on the foreign key relationship 
- * defined in the model
+ * This route will take the name from the
+ * request body, and user it to create a
+ * new category
  */
 router.post('/', async (req, res) => {
   // initialize variables
@@ -91,6 +89,11 @@ router.post('/', async (req, res) => {
   }
 });
 
+/**
+ * @updateCategory
+ * This route will update a category
+ * name based on the ID in the params
+ */
 router.put('/:id', async (req, res) => {
   // initialize variables
   const { name } = req.body,
@@ -100,7 +103,7 @@ router.put('/:id', async (req, res) => {
     // sequelize method to create a new database entry
     const category = await Category.update(
       { category_name: name },
-      { where: { category_id: categoryId } } // where id === params value
+      { where: { category_id: categoryId } } // where category_id === params value
     );
     // return status 200 with data
     const updatedCategory = await Category.findByPk(categoryId, { include: Product });
@@ -116,8 +119,35 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', (req, res) => {
-  // delete a category by its `id` value
+/**
+ * @deleteCategory
+ * This route will delete a category
+ * based on the ID in the params
+ */
+router.delete('/:id', async (req, res) => {
+  // initialize variables
+  const categoryId = req.params.id;
+  // error handler
+  try {
+    // sequelize method to create a new database entry
+    const category = await Category.destroy(
+      { where: { category_id: categoryId } } // where category_id === params value
+    );
+    // return status 200 with data
+    const updatedCategoryList = await Category.findAll({
+      include: [Product], // include all associated Products
+    });
+    // return status 200 with data
+    res.status(200).json(updatedCategoryList);
+  } 
+  // an error was detected 
+  catch (error) {
+    // log the error
+    console.error(error);
+    // return status 500 with error message
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
+// export the routes
 module.exports = router;

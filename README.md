@@ -114,10 +114,21 @@ my database
   ```
   > Once the server is listening use the following commands in Insomnia to view the data
   
-  // TODO: Add routes here
-  **Category Routes**
-  * Get all categories and their associated products: GET localhost:3001/api/categories
-  * Get one category based on id, and their associated products: GET localhost:3001/api/categories/:id
+  ### Category Routes
+  * Get all categories and their associated products: 
+    - **GET** localhost:3001/api/categories
+  * Get one category based on id with their associated products: 
+    - **GET** localhost:3001/api/categories/:id
+  * Create a new category: 
+    - **POST** localhost:3001/api/categories/:id
+    - Set Body to JSON, then enter the following: { "name": "category_name_goes_here" }
+  * Update a category: 
+    - **PUT** localhost:3001/api/categories/:id
+    - Set Body to JSON, then enter the following: { "name": "updated_category_name_goes_here" }
+  * Delete a category: 
+    - **DELETE** localhost:3001/api/categories/:id
+
+  // TODO: Add additional routes here  
 
   ## Screenshot
   
