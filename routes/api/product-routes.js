@@ -77,15 +77,17 @@ router.post('/', (req, res) => {
   try {
   // sequelize method to create a new product
   Product.create(req.body)
+    // promise resolved, respond status 200 with data if no tags, otherwise bulk create the tags and return
     .then((product) => {
       // if there's product tags, we need to 
       // create pairings to bulk create in the ProductTag model
       if (req.body.tagIds.length) {
         // loop through the tag id's and return the data
         const productTagIdArr = req.body.tagIds.map((tag_id) => {
+          // return the object
           return {
-            product_id: product.id,
-            tag_id,
+            product_id: product.id, // product id
+            tag_id, // tag id
           };
         });
         // pass array of objects to sequelize method 
@@ -97,6 +99,7 @@ router.post('/', (req, res) => {
     })
     // promise resolved, respond status 200 with data
     .then((productTagIds) => res.status(200).json(productTagIds))
+    // catch errors
     .catch((err) => {
       // log the error
       console.log(err);
@@ -113,50 +116,83 @@ router.post('/', (req, res) => {
   }
 });
 
-// update product
-router.put('/:id', (req, res) => {
-  // update product data
-  Product.update(req.body, {
-    where: {
-      id: req.params.id,
-    },
-  })
+/**
+ * @updateProduct
+ * This route will update a product
+ * name based on the ID in the params
+ */
+router.put('/:id', async (req, res) => {
+  // error handler
+  try {
+    // sequelize method to update a product
+    await Product.update(req.body, {
+      where: {
+        id: req.params.id, // where id === params value
+      },
+      include: [
+        {
+          model: Category, // include the Category model
+        },
+        {
+          model: Tag, // include the Tag model
+        },
+      ]
+    })
+    // promise resolved, find and return product tags where product_id === params value
     .then((product) => {
       // find all associated tags from ProductTag
       return ProductTag.findAll({ where: { product_id: req.params.id } });
     })
+    // promise resolved, delete the product tag and bulk create the new tags
     .then((productTags) => {
-      // get list of current tag_ids
-      const productTagIds = productTags.map(({ tag_id }) => tag_id);
-      // create filtered list of new tag_ids
-      const newProductTags = req.body.tagIds
-        .filter((tag_id) => !productTagIds.includes(tag_id))
-        .map((tag_id) => {
-          return {
-            product_id: req.params.id,
-            tag_id,
-          };
-        });
-      // figure out which ones to remove
-      const productTagsToRemove = productTags
-        .filter(({ tag_id }) => !req.body.tagIds.includes(tag_id))
-        .map(({ id }) => id);
+      // initialize variables
+      const productTagIds = productTags.map(({ tag_id }) => tag_id),
+            newProductTags = req.body.tags
+            // filters out tags that are already in the list
+            .filter((tag) => !productTagIds.includes(tag.tag_id))
+            // maps remaining data for a new tags list
+            .map((tag) => {
+              return {
+                product_id: req.params.id, // product id
+                tag_id: tag.tag_id, // tag id
+              };
+            }),
+            productTagsToRemove = productTags
+            // filters out tags that need to be removed
+            .filter(({ tag_id }) => !req.body.tags.map(({ tag_id }) => tag_id).includes(tag_id))
+            // maps remaining data for a new tags list
+            .map(({ id }) => id);
 
-      // run both actions
-      return Promise.all([
-        ProductTag.destroy({ where: { id: productTagsToRemove } }),
-        ProductTag.bulkCreate(newProductTags),
-      ]);
+      console.log(newProductTags);
+
+      // initialize variables
+      const destroyPromise = ProductTag.destroy({ where: { id: productTagsToRemove } }), // sequelize method to delete the product tags marked for removal
+            bulkCreatePromise = ProductTag.bulkCreate(newProductTags); // sequelize method to bulk create the new product tags
+
+      // return the data
+      return Promise.all([destroyPromise, bulkCreatePromise]);
     })
+    // promise resolved, return the updated tag list
     .then((updatedProductTags) => res.json(updatedProductTags))
+    // catch errors
     .catch((err) => {
-      // console.log(err);
+      // return status 400 with error message
       res.status(400).json(err);
     });
+  }
+  // an error was detected 
+  catch (error) {
+    // log the error
+    console.error(error);
+    // return status 500 with error message
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
+
 
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
 });
 
+// export the routes
 module.exports = router;
