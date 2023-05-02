@@ -163,8 +163,6 @@ router.put('/:id', async (req, res) => {
             // maps remaining data for a new tags list
             .map(({ id }) => id);
 
-      console.log(newProductTags);
-
       // initialize variables
       const destroyPromise = ProductTag.destroy({ where: { id: productTagsToRemove } }), // sequelize method to delete the product tags marked for removal
             bulkCreatePromise = ProductTag.bulkCreate(newProductTags); // sequelize method to bulk create the new product tags
@@ -189,9 +187,34 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-
-router.delete('/:id', (req, res) => {
-  // delete one product by its `id` value
+/**
+ * @deleteProduct
+ * This route will delete a product
+ * based on the ID in the params
+ */
+router.delete('/:id', async (req, res) => {
+  // initialize variables
+  const productId = req.params.id;
+  // error handler
+  try {
+    // sequelize method to delete a product 
+    await Product.destroy(
+      { where: { id: productId } } // where id === params value
+    );
+    // get the updated category data
+    const products = await Product.findAll({
+      include: [Category, Tag], // include all associated Category and Tag data
+    });
+    // return status 200 with data
+    res.status(200).json(products);
+  } 
+  // an error was detected 
+  catch (error) {
+    // log the error
+    console.error(error);
+    // return status 500 with error message
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
 // export the routes
