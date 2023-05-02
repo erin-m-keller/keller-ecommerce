@@ -122,11 +122,11 @@ my database
   * Create a new category: 
     - **POST** localhost:3001/api/categories
     - Set Body to JSON, then enter the following: 
-      - { "name": "category_name_goes_here" }
+      - { "name": "name here" }
   * Update a category: 
     - **PUT** localhost:3001/api/categories/:id
     - Set Body to JSON, then enter the following: 
-      - { "name": "new_category_name_goes_here" }
+      - { "name": "name here" }
   * Delete a category: 
     - **DELETE** localhost:3001/api/categories/:id
 
@@ -138,11 +138,11 @@ my database
   * Create a new tag: 
     - **POST** localhost:3001/api/tags
     - Set Body to JSON, then enter the following: 
-      - { "name": "tag_name_goes_here" }
+      - { "name": "name here" }
   * Update a tag: 
     - **PUT** localhost:3001/api/tags/:id
     - Set Body to JSON, then enter the following: 
-      - { "name": "new_tag_name_goes_here" }
+      - { "name": "name here" }
   * Delete a tag: 
     - **DELETE** localhost:3001/api/tags/:id
 
