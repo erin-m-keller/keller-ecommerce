@@ -65,36 +65,52 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// create new product
+/**
+ * @createNewProduct
+ * This route will take the data from the
+ * request body, and use it to create a
+ * new product. req.body expects product_name,
+ * price, stock, tagId array, and category_id
+ */
 router.post('/', (req, res) => {
-  /* req.body should look like this...
-    {
-      product_name: "Basketball",
-      price: 200.00,
-      stock: 3,
-      tagIds: [1, 2, 3, 4]
-    }
-  */
+  // error handler
+  try {
+  // sequelize method to create a new product
   Product.create(req.body)
     .then((product) => {
-      // if there's product tags, we need to create pairings to bulk create in the ProductTag model
+      // if there's product tags, we need to 
+      // create pairings to bulk create in the ProductTag model
       if (req.body.tagIds.length) {
+        // loop through the tag id's and return the data
         const productTagIdArr = req.body.tagIds.map((tag_id) => {
           return {
             product_id: product.id,
             tag_id,
           };
         });
+        // pass array of objects to sequelize method 
+        // bulkCreate and create multiple records at once
         return ProductTag.bulkCreate(productTagIdArr);
       }
       // if no product tags, just respond
       res.status(200).json(product);
     })
+    // promise resolved, respond status 200 with data
     .then((productTagIds) => res.status(200).json(productTagIds))
     .catch((err) => {
+      // log the error
       console.log(err);
+      // return status 400 with error message
       res.status(400).json(err);
     });
+  }
+  // an error was detected 
+  catch (error) {
+    // log the error
+    console.error(error);
+    // return status 500 with error message
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
 // update product
