@@ -1,3 +1,4 @@
+// initialize variables
 const router = require('express').Router(),
       { Product, Category, Tag, ProductTag } = require('../../models');
 
@@ -29,10 +30,39 @@ router.get('/', async (req, res) => {
   }
 });
 
-// get one product
-router.get('/:id', (req, res) => {
-  // find a single product by its `id`
-  // be sure to include its associated Category and Tag data
+/**
+ * @getSpecificProduct
+ * This route will retrieve one Product 
+ * record based on an id, and join them 
+ * with their associated Category and 
+ * Tag records based on the foreign 
+ * key relationship defined in the model
+ */
+router.get('/:id', async (req, res) => {
+  // initialize variables
+  const productId = req.params.id;
+  // error handler
+  try {
+    // sequelize method to find a specific tag
+    const product = await Product.findOne({
+      where: { id: productId }, // where id === params value
+      include: [Category, Tag], // include all associated Categories and Tags 
+    });
+    // if no product is found
+    if (!product) {
+      // return status 400 with not found message
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    // return the data
+    res.json(product);
+  }
+  // an error was detected 
+  catch (error) {
+    // log the error
+    console.error(error);
+    // return status 500 with error message
+    res.status(500).json({ message: 'Internal Server error' });
+  }
 });
 
 // create new product

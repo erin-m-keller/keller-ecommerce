@@ -108,7 +108,7 @@ router.put('/:id', async (req, res) => {
     );
     // return status 200 with data
     const updatedTag = await Tag.findByPk(tagId, 
-      { include: Product }
+      { include: Product } // include all associated products
     );
     // return status 200 with data
     res.status(200).json(updatedTag);
@@ -137,9 +137,9 @@ router.delete('/:id', async (req, res) => {
       { where: { tag_id: tagId } } // where tag_id === params value
     );
     // get the updated category data
-    const updatedTagList = await Tag.findAll({
-      include: [Product], // include all associated Products
-    });
+    const updatedTagList = await Tag.findByPk(tagId, 
+      { include: Product } // include all associated products
+    );
     // return status 200 with data
     res.status(200).json(updatedTagList);
   } 
