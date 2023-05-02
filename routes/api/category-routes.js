@@ -136,10 +136,10 @@ router.delete('/:id', async (req, res) => {
     const category = await Category.destroy(
       { where: { category_id: categoryId } } // where category_id === params value
     );
-    // get the updated category data
-    const updatedCategoryList = await Category.findAll({
-      include: [Product], // include all associated Products
-    });
+    // return status 200 with data
+    const updatedCategoryList = await Category.findByPk(categoryId, 
+      { include: Product } // include all associated products
+    );
     // return status 200 with data
     res.status(200).json(updatedCategoryList);
   } 
