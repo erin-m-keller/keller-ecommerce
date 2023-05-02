@@ -182,6 +182,25 @@ my database
           "category_id": 1 
         }
       ```
+  * Update a product: 
+    - **PUT** localhost:3001/api/products/:id
+    - Set Body to JSON, then use the following data structure:
+      ``` json
+        {
+          "product_name": "Unicorn 4",
+          "price": 11.50,
+          "stock": 16,
+          "category_id": 4,
+          "tags": [
+            {
+              "tag_id": 1
+            },
+            {
+              "tag_id": 7
+            }
+          ]
+        }
+      ```
 
   ## Screenshot
   
