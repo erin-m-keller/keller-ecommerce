@@ -72,11 +72,11 @@ router.get('/:id', async (req, res) => {
  * new product. req.body expects product_name,
  * price, stock, tagId array, and category_id
  */
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   // error handler
   try {
-  // sequelize method to create a new product
-  Product.create(req.body)
+    // sequelize method to create a new product
+    await Product.create(req.body)
     // promise resolved, respond status 200 with data if no tags, otherwise bulk create the tags and return
     .then((product) => {
       // if there's product tags, we need to 
