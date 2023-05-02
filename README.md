@@ -201,10 +201,12 @@ my database
           ]
         }
       ```
+  * Delete a product: 
+    - **DELETE** localhost:3001/api/products/:id
 
   ## Screenshot
   
-  // TODO: add screenshot
+  ![FinishedProduct](./assets/images/finished-product.png)
   
   ## Usage
   
@@ -218,7 +220,7 @@ my database
 
   ## Outside Resources
   
-  // TODO: add outside resources
+  * [ChatGPT](https://openai.com/blog/chatgpt): Used ChatGPT to generate the regex used within the validate functions.
   
   ## Questions
   If you have any questions about this project, please contact me directly at [aestheticartist@gmail.com](aestheticartist@gmail.com).  

@@ -1,8 +1,8 @@
-// import models
-const Product = require('./Product');
-const Category = require('./Category');
-const Tag = require('./Tag');
-const ProductTag = require('./ProductTag');
+// initialize variables
+const Product = require('./Product'),
+      Category = require('./Category'),
+      Tag = require('./Tag'),
+      ProductTag = require('./ProductTag');
 
 // Products belongs to Categories
 Product.belongsTo(Category, {
@@ -40,9 +40,15 @@ Product.belongsToMany(Tag, {
 
 // Tags belong to many Products 
 Tag.belongsToMany(Product, {
-  through: ProductTag, // ProductTag is the join table
-  foreignKey: 'tag_id', // ProductTag model key, references tag_id in Tag model
-  onDelete: "CASCADE" //
+   // ProductTag is the join table
+  through: ProductTag,
+  // ProductTag model key, references tag_id in Tag model
+  foreignKey: 'tag_id',
+  // all ProductTag rows that reference the deleted 
+  // Tag will also be deleted, and all related Product 
+  // rows that reference the deleted ProductTag rows 
+  // will also be deleted to maintain referential integrity
+  onDelete: "CASCADE" 
 });
 
 // export the models

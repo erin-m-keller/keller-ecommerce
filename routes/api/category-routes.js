@@ -101,7 +101,7 @@ router.put('/:id', async (req, res) => {
         categoryId = req.params.id;
   // error handler
   try {
-    // sequelize method to create a new database entry
+    // sequelize method to update a database entry
     await Category.update(
       { category_name: name }, // update the category name
       { where: { category_id: categoryId } } // where category_id === params value

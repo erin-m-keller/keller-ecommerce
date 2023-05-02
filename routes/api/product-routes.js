@@ -126,16 +126,10 @@ router.put('/:id', async (req, res) => {
   try {
     // sequelize method to update a product
     await Product.update(req.body, {
-      where: {
-        id: req.params.id, // where id === params value
-      },
+      where: { id: req.params.id }, // where id === params value
       include: [
-        {
-          model: Category, // include the Category model
-        },
-        {
-          model: Tag, // include the Tag model
-        },
+        { model: Category }, // include the Category model
+        { model: Tag }, // include the Tag model
       ]
     })
     // promise resolved, find and return product tags where product_id === params value
