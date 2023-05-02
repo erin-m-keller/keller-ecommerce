@@ -8,6 +8,7 @@
   * [User Story](#user-story)
   * [Acceptance Criteria](#acceptance-criteria)
   * [Installation](#installation)
+  * [API Routes](#api-routes)
   * [Screenshot](#screenshot)
   * [Usage](#usage)
   * [License](#license)
@@ -112,7 +113,9 @@ my database
    ``` bash
     npm start
   ```
-  > Once the server is listening use the following commands in Insomnia/Postman to view the data
+  > Once the server is listening use the below commands in Insomnia/Postman to view the data
+
+  ## API Routes
   
   ### Category Routes
   * Get all categories and their associated products: 
