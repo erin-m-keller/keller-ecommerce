@@ -124,12 +124,20 @@ my database
     - **GET** localhost:3001/api/categories/:id
   * Create a new category: 
     - **POST** localhost:3001/api/categories
-    - Set Body to JSON, then enter the following: 
-      - { "name": "name here" }
+    - Set Body to JSON, then use the following data structure:
+      ``` json
+        { 
+          "name": "name here" 
+        }
+      ```
   * Update a category: 
     - **PUT** localhost:3001/api/categories/:id
-    - Set Body to JSON, then enter the following: 
-      - { "name": "name here" }
+    - Set Body to JSON, then use the following data structure:
+      ``` json
+        { 
+          "name": "name here" 
+        }
+      ```
   * Delete a category: 
     - **DELETE** localhost:3001/api/categories/:id
 
@@ -140,12 +148,20 @@ my database
     - **GET** localhost:3001/api/tags/:id
   * Create a new tag: 
     - **POST** localhost:3001/api/tags
-    - Set Body to JSON, then enter the following: 
-      - { "name": "name here" }
+    - Set Body to JSON, then use the following data structure:
+      ``` json
+        { 
+          "name": "name here" 
+        }
+      ```
   * Update a tag: 
     - **PUT** localhost:3001/api/tags/:id
-    - Set Body to JSON, then enter the following: 
-      - { "name": "name here" }
+    - Set Body to JSON, then use the following data structure:
+      ``` json
+        { 
+          "name": "name here" 
+        }
+      ```
   * Delete a tag: 
     - **DELETE** localhost:3001/api/tags/:id
 
@@ -156,8 +172,16 @@ my database
     - **GET** localhost:3001/api/products/:id
   * Create a new product: 
     - **POST** localhost:3001/api/product
-    - Set Body to JSON, then enter the following:
-      - { "product_name": "name here", "price": 200.00, "stock": 3, "tagIds": [1, 2, 3, 4], "category_id": 1 }
+    - Set Body to JSON, then use the following data structure:
+      ``` json
+        { 
+          "product_name": "name here", 
+          "price": 200.00, 
+          "stock": 3, 
+          "tagIds": [1, 2, 3, 4], 
+          "category_id": 1 
+        }
+      ```
 
   ## Screenshot
   
