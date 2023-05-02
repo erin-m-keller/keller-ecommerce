@@ -121,10 +121,12 @@ my database
     - **GET** localhost:3001/api/categories/:id
   * Create a new category: 
     - **POST** localhost:3001/api/categories
-    - Set Body to JSON, then enter the following: { "name": "category_name_goes_here" }
+    - Set Body to JSON, then enter the following: 
+      - { "name": "category_name_goes_here" }
   * Update a category: 
     - **PUT** localhost:3001/api/categories/:id
-    - Set Body to JSON, then enter the following: { "name": "new_category_name_goes_here" }
+    - Set Body to JSON, then enter the following: 
+      - { "name": "new_category_name_goes_here" }
   * Delete a category: 
     - **DELETE** localhost:3001/api/categories/:id
 
@@ -135,14 +137,24 @@ my database
     - **GET** localhost:3001/api/tags/:id
   * Create a new tag: 
     - **POST** localhost:3001/api/tags
-    - Set Body to JSON, then enter the following: { "name": "tag_name_goes_here" }
+    - Set Body to JSON, then enter the following: 
+      - { "name": "tag_name_goes_here" }
   * Update a tag: 
     - **PUT** localhost:3001/api/tags/:id
-    - Set Body to JSON, then enter the following: { "name": "new_tag_name_goes_here" }
+    - Set Body to JSON, then enter the following: 
+      - { "name": "new_tag_name_goes_here" }
   * Delete a tag: 
     - **DELETE** localhost:3001/api/tags/:id
 
-  // TODO: Add additional routes here  
+  ### Product Routes
+  * Get all products and their associated categories and tags: 
+    - **GET** localhost:3001/api/products
+  * Get one product based on id with their associated categories and tags: 
+    - **GET** localhost:3001/api/products/:id
+  * Create a new product: 
+    - **POST** localhost:3001/api/product
+    - Set Body to JSON, then enter the following:
+      - { "product_name": "name here", "price": 200.00, "stock": 3, "tagIds": [1, 2, 3, 4], "category_id": 1 }
 
   ## Screenshot
   
