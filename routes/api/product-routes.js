@@ -19,14 +19,14 @@ router.get('/', async (req, res) => {
       include: [Category, Tag], // include all associated Category and Tag data
     });
     // return the data
-    res.json(products);
+    return res.json(products);
   } 
   // an error was detected
   catch (err) {
     // log the error
     console.error(err);
     // return status 500 with error message
-    res.status(500).json({ message: 'Internal Server error' });
+    return res.status(500).json(err);
   }
 });
 
@@ -54,14 +54,14 @@ router.get('/:id', async (req, res) => {
       return res.status(404).json({ message: 'Product not found' });
     }
     // return the data
-    res.json(product);
+    return res.json(product);
   }
   // an error was detected 
-  catch (error) {
+  catch (err) {
     // log the error
-    console.error(error);
+    console.error(err);
     // return status 500 with error message
-    res.status(500).json({ message: 'Internal Server error' });
+    return res.status(500).json(err);
   }
 });
 
@@ -92,27 +92,27 @@ router.post('/', async (req, res) => {
         });
         // pass array of objects to sequelize method 
         // bulkCreate and create multiple records at once
-        return ProductTag.bulkCreate(productTagIdArr);
+        ProductTag.bulkCreate(productTagIdArr);
+        // return the data
+        return res.status(200).json(product);
       }
-      // if no product tags, just respond
-      res.status(200).json(product);
+      // if no product tags, return the data
+      return res.status(200).json(product);
     })
-    // promise resolved, respond status 200 with data
-    .then((productTagIds) => res.status(200).json(productTagIds))
     // catch errors
     .catch((err) => {
       // log the error
       console.log(err);
-      // return status 400 with error message
-      res.status(400).json(err);
+      // return status 500 with error message
+      return res.status(500).json(err);
     });
   }
   // an error was detected 
-  catch (error) {
+  catch (err) {
     // log the error
-    console.error(error);
+    console.error(err);
     // return status 500 with error message
-    res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json(err);
   }
 });
 
@@ -161,23 +161,26 @@ router.put('/:id', async (req, res) => {
       const destroyPromise = ProductTag.destroy({ where: { id: productTagsToRemove } }), // sequelize method to delete the product tags marked for removal
             bulkCreatePromise = ProductTag.bulkCreate(newProductTags); // sequelize method to bulk create the new product tags
 
-      // return the data
+      // delete the tags and bulk create the new ones
       return Promise.all([destroyPromise, bulkCreatePromise]);
     })
     // promise resolved, return the updated tag list
     .then((updatedProductTags) => res.json(updatedProductTags))
     // catch errors
     .catch((err) => {
-      // return status 400 with error message
-      res.status(400).json(err);
+      // log the error
+      console.error(err);
+      if (!req.body.id) return res.status(404).json({ message: 'ID not found in the database' });
+      // return status 500 with error message
+      return res.status(500).json(err);
     });
   }
   // an error was detected 
-  catch (error) {
+  catch (err) {
     // log the error
-    console.error(error);
+    console.error(err);
     // return status 500 with error message
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json(err);
   }
 });
 
@@ -200,14 +203,14 @@ router.delete('/:id', async (req, res) => {
       include: [Category, Tag], // include all associated Category and Tag data
     });
     // return status 200 with data
-    res.status(200).json(products);
+    return res.status(200).json(products);
   } 
   // an error was detected 
-  catch (error) {
+  catch (err) {
     // log the error
-    console.error(error);
+    console.error(err);
     // return status 500 with error message
-    res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json(err);
   }
 });
 

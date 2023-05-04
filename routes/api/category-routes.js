@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
     // log the error
     console.error(err);
     // return status 500 with error message
-    res.status(500).json({ message: 'Internal Server error' });
+    res.status(500).json(err);
   }
 });
 
@@ -57,11 +57,11 @@ router.get('/:id', async (req, res) => {
     res.json(category);
   }
   // an error was detected 
-  catch (error) {
+  catch (err) {
     // log the error
-    console.error(error);
+    console.error(err);
     // return status 500 with error message
-    res.status(500).json({ message: 'Internal Server error' });
+    res.status(500).json(err);
   }
 });
 
@@ -82,11 +82,11 @@ router.post('/', async (req, res) => {
     res.status(200).json(category);
   } 
   // an error was detected 
-  catch (error) {
+  catch (err) {
     // log the error
-    console.error(error);
+    console.error(err);
     // return status 500 with error message
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json(err);
   }
 });
 
@@ -110,15 +110,17 @@ router.put('/:id', async (req, res) => {
     const updatedCategory = await Category.findByPk(categoryId, 
       { include: Product }
     );
-    // return status 200 with data
+    // if null, return 404 with message
+    if (!updatedCategory) return res.status(404).json({ message: 'Category ID not found in the database' });
+    // else, return status 200 with data
     res.status(200).json(updatedCategory);
   } 
   // an error was detected 
-  catch (error) {
+  catch (err) {
     // log the error
-    console.error(error);
+    console.error(err);
     // return status 500 with error message
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json(err);
   }
 });
 
@@ -133,22 +135,22 @@ router.delete('/:id', async (req, res) => {
   // error handler
   try {
     // sequelize method to delete a category
-    const category = await Category.destroy(
+    await Category.destroy(
       { where: { category_id: categoryId } } // where category_id === params value
     );
-    // return status 200 with data
-    const updatedCategoryList = await Category.findByPk(categoryId, 
+    // get the new category list
+    const updatedCategory = await Category.findByPk(categoryId, 
       { include: Product } // include all associated products
     );
-    // return status 200 with data
-    res.status(200).json(updatedCategoryList);
+    // return success message
+    res.status(200).json({ message: 'Successfully deleted the category with the ID ' + categoryId });
   } 
   // an error was detected 
-  catch (error) {
+  catch (err) {
     // log the error
-    console.error(error);
+    console.error(err);
     // return status 500 with error message
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json(err);
   }
 });
 
