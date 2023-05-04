@@ -106,7 +106,7 @@ router.put('/:id', async (req, res) => {
       { category_name: name }, // update the category name
       { where: { category_id: categoryId } } // where category_id === params value
     );
-    // return status 200 with data
+    // find the updated category
     const updatedCategory = await Category.findByPk(categoryId, 
       { include: Product }
     );
