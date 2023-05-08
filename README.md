@@ -84,7 +84,7 @@ my database
   Once MySQL server has started, create the database
 
   ``` bash
-    SOURCE schema.sql 
+    SOURCE createDatabase.sql
   ```
 
   Exit the MySQL server
