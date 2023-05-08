@@ -211,7 +211,11 @@ my database
   
   ## Usage
   
-  // TODO: add video
+  
+
+  https://user-images.githubusercontent.com/2955501/236949476-a2849b75-e58f-4941-8c9a-7c046a2bd6f5.mp4
+
+  > Click to play!
   
   ## License 
   [![MIT license](https://img.shields.io/badge/License-MIT-purple.svg)](https://lbesson.mit-license.org/)
