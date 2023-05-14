@@ -210,10 +210,8 @@ my database
   ![FinishedProduct](./assets/images/finished-product.png)
   
   ## Usage
-  
-  
 
-  https://user-images.githubusercontent.com/2955501/236949476-a2849b75-e58f-4941-8c9a-7c046a2bd6f5.mp4
+  https://github.com/erin-m-keller/keller-ecommerce/assets/2955501/aec203ef-3378-449c-999f-099dcf887c47
 
   > Click to play!
   
